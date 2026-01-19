@@ -1,5 +1,9 @@
 import pygame
 
+def is_valid_word(word):
+    """Return True only if the word contains letters only."""
+    return all(ch.isalpha() for ch in word)
+
 def load_words():
     """ Reads the words.txt file and returns a list of words """
     with open("words.txt", "r", encoding="utf-8") as f:
@@ -16,6 +20,9 @@ def word_list_menu(screen, width, blackboard, button_font):
     words = load_words()
     input_text = ""
     selected_index = None
+
+    error_message = ""
+    error_start_time = 0
 
     running_menu = True
     while running_menu:
@@ -61,6 +68,24 @@ def word_list_menu(screen, width, blackboard, button_font):
         screen.blit(button_font.render("Delete", True, (255,255,255)), (del_btn.x+25, del_btn.y+5))
         screen.blit(button_font.render("Back to main menu", True, (0,0,0)), (back_btn.x+100, back_btn.y+5))
 
+        # --- ERROR MESSAGE (fade-out) ---
+        if error_message:
+            elapsed = pygame.time.get_ticks() - error_start_time
+
+            if elapsed < 3000:
+                alpha = max(0, 255 - int((elapsed / 2000) * 255))
+
+                err_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+                err_text = err_font.render(error_message, True, (255, 0, 0))
+                err_text.set_alpha(alpha)
+
+                screen.blit(
+                    err_text,
+                    (width//2 - err_text.get_width()//2, 330)
+                )
+            else:
+                error_message = ""  # message terminé
+
         pygame.display.flip()
 
         # Events
@@ -80,10 +105,20 @@ def word_list_menu(screen, width, blackboard, button_font):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if add_btn.collidepoint(event.pos):
-                    if input_text.strip():
-                        words.append(input_text.strip())
-                        save_words(words)
+                    new_word = input_text.strip()
+
+                    if not new_word:
+                        continue
+
+                    if not is_valid_word(new_word):
+                        error_message = "Caractère non autorisé"
+                        error_start_time = pygame.time.get_ticks()
                         input_text = ""
+                        continue
+
+                    words.append(new_word)
+                    save_words(words)
+                    input_text = ""
 
                 if del_btn.collidepoint(event.pos):
                     if selected_index is not None:

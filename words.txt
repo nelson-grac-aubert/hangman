@@ -4,8 +4,7 @@ galaxie
 fantome
 volcan
 papillon
-cascade
 mystère
-cerisier
 horloge
-sucrette
+idiome
+écran
