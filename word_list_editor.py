@@ -1,0 +1,108 @@
+import pygame
+
+def load_words():
+    """ Reads the words.txt file and returns a list of words """
+    with open("words.txt", "r", encoding="utf-8") as f:
+        return [w.strip() for w in f.readlines()]
+
+def save_words(words):
+    """ Writes a new word entry into words.txt file """
+    with open("words.txt", "w", encoding="utf-8") as f:
+        f.write("\n".join(words))
+
+def word_list_menu(screen, width, blackboard, button_font):
+
+    """ Handles the menu to edit the hangman list of words """
+    words = load_words()
+    input_text = ""
+    selected_index = None
+
+    running_menu = True
+    while running_menu:
+        screen.fill("white")
+        screen.blit(blackboard, (0, 0))
+
+        # Title
+        title_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 40)
+        title = title_font.render("Edit Word List", True, (0,0,0))
+        screen.blit(title, (width//2 - title.get_width()//2, 0))
+
+        # Display words
+        words_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 25)
+
+        max_per_column = 10
+        col_width = 250   
+        start_x = 130
+        start_y = 80
+        line_spacing = 28
+
+        for i, w in enumerate(words):
+            col = i // max_per_column         
+            row = i % max_per_column          
+
+            x = start_x + col * col_width
+            y = start_y + row * line_spacing
+
+            color = (144, 213, 255) if i == selected_index else (255, 255, 255)
+            txt = words_font.render(w, True, color)
+            screen.blit(txt, (x, y))
+
+        # Input box
+        pygame.draw.rect(screen, (255,255,255), (550, 390, 300, 40), 2)
+        txt = button_font.render(input_text, True, (255,255,255))
+        screen.blit(txt, (560, 395))
+
+        # Buttons
+        add_btn = pygame.Rect(510, 440, 140, 40)
+        del_btn = pygame.Rect(735, 440, 140, 40)
+        back_btn = pygame.Rect(600, 537, 300, 50)
+
+        screen.blit(button_font.render("Add", True, (255,255,255)), (add_btn.x+40, add_btn.y+5))
+        screen.blit(button_font.render("Delete", True, (255,255,255)), (del_btn.x+25, del_btn.y+5))
+        screen.blit(button_font.render("Back to main menu", True, (0,0,0)), (back_btn.x+100, back_btn.y+5))
+
+        pygame.display.flip()
+
+        # Events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                elif event.key == pygame.K_RETURN:
+                    pass
+                else:
+                    if len(input_text) < 20:
+                        input_text += event.unicode
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if add_btn.collidepoint(event.pos):
+                    if input_text.strip():
+                        words.append(input_text.strip())
+                        save_words(words)
+                        input_text = ""
+
+                if del_btn.collidepoint(event.pos):
+                    if selected_index is not None:
+                        words.pop(selected_index)
+                        save_words(words)
+                        selected_index = None
+
+                if back_btn.collidepoint(event.pos):
+                    running_menu = False
+
+               
+                # Select word
+                for i in range(len(words)):
+                    col = i // max_per_column
+                    row = i % max_per_column
+
+                    x = start_x + col * col_width
+                    y = start_y + row * line_spacing
+
+                    rect = pygame.Rect(x, y, 300, line_spacing)
+                    if rect.collidepoint(event.pos):
+                        selected_index = i

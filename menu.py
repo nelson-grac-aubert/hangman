@@ -1,4 +1,5 @@
 import pygame 
+from word_list_editor import word_list_menu
 
 pygame.init()
 pygame.mixer.init()
@@ -50,11 +51,13 @@ left_arrow_rect  = pygame.Rect(btn4_rect.x - arrow_size - 70, btn4_rect.y + 10, 
 right_arrow_rect = pygame.Rect(btn4_rect.right + 70, btn4_rect.y + 10, arrow_size, arrow_size)
 
 def draw_button(surface, rect, text, font):
+    """ Draws a main menu button """
     txt = font.render(text, True, (255, 255, 255))
     txt_rect = txt.get_rect(center=rect.center)
     surface.blit(txt, txt_rect)
 
 def draw_arrow(surface, rect, direction):
+    """ Draws the arrow for the difficulty selection """
     
     if direction == "left":
         points = [
@@ -111,6 +114,9 @@ while running:
                     pygame.mixer.music.pause()
                 else:
                     pygame.mixer.music.unpause()
+
+            if btn2_rect.collidepoint(event.pos):
+                word_list_menu(screen, width, blackboard, button_font)
 
         if event.type == pygame.QUIT:
             running = False
