@@ -1,19 +1,32 @@
 import pygame 
 
 pygame.init()
+pygame.mixer.init()
+
 (width, height) = (1000, 600)
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((width, height))
 
+# SOUND
+pygame.mixer.music.load("assets/music/background_music.mp3")
+pygame.mixer.music.play(-1)
+# sound icons
+mute_icon = pygame.image.load("assets/images/music.png")
+unmute_icon = pygame.image.load("assets/images/music_off.png")
+mute_icon = pygame.transform.scale(mute_icon, (40, 40))
+unmute_icon = pygame.transform.scale(unmute_icon, (40, 40))
+icon_rect = mute_icon.get_rect(topleft=(900, 545))
+
 # BACKGROUND 
 
-blackboard = pygame.image.load("assets/blackboard.png")
+blackboard = pygame.image.load("assets/images/blackboard.png")
 blackboard = pygame.transform.scale(blackboard, (1000, 600))
 
 # FONT
-chalk_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+chalk_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 60)
 # TITLE
-title_surface = chalk_font.render('Hangman X _ X', False, (255, 255, 255))
+title_surface = chalk_font.render('Hangman', False, (255, 255, 255))
+title_rect = title_surface.get_rect(center=(width // 2, 120))
 
 # BUTTONS
 button_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 30)
@@ -22,7 +35,7 @@ btn_w, btn_h = 220, 55
 btn_x = width // 2 - btn_w // 2
 # buttons position
 start_y = 200
-spacing = 50
+spacing = 65
 btn1_rect = pygame.Rect(btn_x, start_y + spacing * 0, btn_w, btn_h)  # New Game
 btn2_rect = pygame.Rect(btn_x, start_y + spacing * 1, btn_w, btn_h)  # Edit Word List
 btn3_rect = pygame.Rect(btn_x, start_y + spacing * 2, btn_w, btn_h)  # Score
@@ -59,15 +72,20 @@ def draw_arrow(surface, rect, direction):
     pygame.draw.polygon(surface, (255, 255, 255), points)
 
 pygame.display.flip()
-pygame.display.set_caption('Pendu')
+pygame.display.set_caption('Hangman')
 
 running = True
+is_muted = False
 main_menu = True 
 
 while running:
     screen.fill("white")
     screen.blit(blackboard,(0,0))
-    screen.blit(title_surface, (305,120))
+
+    screen.blit(title_surface, title_rect)
+
+    screen.blit(mute_icon if not is_muted else unmute_icon, icon_rect)
+    
     clock.tick(30)
 
     draw_button(screen, btn1_rect, "New Game", button_font)
@@ -86,6 +104,13 @@ while running:
                 difficulty_index = (difficulty_index - 1) % len(difficulty_levels)
             elif right_arrow_rect.collidepoint(event.pos):
                 difficulty_index = (difficulty_index + 1) % len(difficulty_levels)
+
+            if icon_rect.collidepoint(event.pos):
+                is_muted = not is_muted
+                if is_muted:
+                    pygame.mixer.music.pause()
+                else:
+                    pygame.mixer.music.unpause()
 
         if event.type == pygame.QUIT:
             running = False
