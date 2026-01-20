@@ -56,8 +56,8 @@ def word_list_menu(screen, width, blackboard, button_font,
     error_message = ""
     error_start_time = 0
 
-    running_menu = True
-    while running_menu:
+    words_screen = True
+    while words_screen:
         screen.blit(blackboard, (0, 0))
 
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
@@ -142,7 +142,7 @@ def word_list_menu(screen, width, blackboard, button_font,
                         selected_index = None
 
                 if back_btn.collidepoint(event.pos):
-                    running_menu = False
+                    words_screen = False
 
                 # Select word
                 for i in range(len(words)):

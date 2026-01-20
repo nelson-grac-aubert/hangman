@@ -37,8 +37,8 @@ def score_board_menu(screen, width, blackboard, button_font, is_muted, sound_mut
     
     scores = ["Alice - 12", "Bob - 9", "Charlie - 7"]
 
-    running = True
-    while running:
+    score_screen = True
+    while score_screen:
         screen.blit(blackboard, (0, 0))
 
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
@@ -62,4 +62,4 @@ def score_board_menu(screen, width, blackboard, button_font, is_muted, sound_mut
                 sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
                 if back_btn.collidepoint(event.pos):
-                    running = False
+                    score_screen = False
