@@ -4,6 +4,21 @@ from sound_control import *
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
 sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
+def load_hangman_images():
+    images = {}
+    for i in range(7):
+        img = pygame.image.load(f"assets/images/{i}_lives.png")
+        images[i] = pygame.transform.smoothscale(img, (200, 200))
+    return images
+
+hangman_imgs = load_hangman_images()
+
+def draw_hangman(screen, lives, x, y):
+    lives = max(0, min(6, lives))
+    img = hangman_imgs[lives]
+    screen.blit(img, (x, y))
+
+
 def draw_back_button(screen, button_font):
     """Draws the back-to-menu button and returns its rect."""
     back_btn = pygame.Rect(600, 537, 300, 50)
@@ -13,7 +28,7 @@ def draw_back_button(screen, button_font):
 
 
 def new_game_menu(screen, blackboard, button_font,
-                  mute_icon, unmute_icon, sound_rect, is_muted, sound_muted):
+                  mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, lives_remaining):
     """Main loop for the New Game screen."""
 
     in_game = True
@@ -23,8 +38,9 @@ def new_game_menu(screen, blackboard, button_font,
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
         draw_sfx_button(screen, sound_muted, sound_mute_icon, sound_unmute_icon, sfx_rect)
 
-        # Back button
         back_btn = draw_back_button(screen, button_font)
+
+        draw_hangman(screen, lives_remaining, 125, 80)
 
         pygame.display.flip()
 
