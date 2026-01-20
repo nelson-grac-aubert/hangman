@@ -3,6 +3,7 @@ from sound_control import *
 
 # SOUND ICON
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
+sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
 def draw_title(screen, width, text):
     """Draws a centered black title at the top."""
@@ -31,7 +32,7 @@ def draw_scores(screen, scores, width):
         screen.blit(txt, (width//2 - txt.get_width()//2, start_y + i * spacing))
 
 
-def score_board_menu(screen, width, blackboard, button_font, is_muted):
+def score_board_menu(screen, width, blackboard, button_font, is_muted, sound_muted):
     """Main loop for the score board screen."""
     
     scores = ["Alice - 12", "Bob - 9", "Charlie - 7"]
@@ -41,6 +42,7 @@ def score_board_menu(screen, width, blackboard, button_font, is_muted):
         screen.blit(blackboard, (0, 0))
 
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
+        draw_sfx_button(screen, sound_muted, sound_mute_icon, sound_unmute_icon, sfx_rect)
 
         draw_title(screen, width, "Score Board")
         draw_scores(screen, scores, width)
@@ -57,6 +59,7 @@ def score_board_menu(screen, width, blackboard, button_font, is_muted):
             if event.type == pygame.MOUSEBUTTONDOWN:
 
                 is_muted = handle_sound_click(event, sound_rect, is_muted)
+                sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
                 if back_btn.collidepoint(event.pos):
                     running = False

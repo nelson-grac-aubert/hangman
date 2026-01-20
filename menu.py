@@ -112,14 +112,14 @@ while running:
 
             if btn1_rect.collidepoint(event.pos): 
                 new_game_menu(screen, width, blackboard, button_font,
-                mute_icon, unmute_icon, sound_rect, is_muted)
+                mute_icon, unmute_icon, sound_rect, is_muted, sound_muted)
 
             if btn2_rect.collidepoint(event.pos):
                 word_list_menu(screen, width, blackboard, button_font,
                 mute_icon, unmute_icon, sound_rect, is_muted, sound_muted)
 
             if btn3_rect.collidepoint(event.pos):  
-                score_board_menu(screen, width, blackboard, button_font, is_muted)
+                score_board_menu(screen, width, blackboard, button_font, is_muted, sound_muted)
 
         if event.type == pygame.QUIT:
             running = False
