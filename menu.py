@@ -111,7 +111,7 @@ while running:
             sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
             if btn1_rect.collidepoint(event.pos): 
-                new_game_menu(screen, width, blackboard, button_font,
+                new_game_menu(screen, blackboard, button_font,
                 mute_icon, unmute_icon, sound_rect, is_muted, sound_muted)
 
             if btn2_rect.collidepoint(event.pos):

@@ -12,7 +12,7 @@ def draw_back_button(screen, button_font):
     return back_btn
 
 
-def new_game_menu(screen, width, blackboard, button_font,
+def new_game_menu(screen, blackboard, button_font,
                   mute_icon, unmute_icon, sound_rect, is_muted, sound_muted):
     """Main loop for the New Game screen."""
 

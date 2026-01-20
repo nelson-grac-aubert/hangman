@@ -65,7 +65,7 @@ def word_list_menu(screen, width, blackboard, button_font,
 
         # Title
         title_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 40)
-        title = title_font.render("Edit Word List", True, (0,0,0))
+        title = title_font.render("Word List", True, (0,0,0))
         screen.blit(title, (width//2 - title.get_width()//2, 0))
 
         # Display words

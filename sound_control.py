@@ -11,8 +11,8 @@ def load_sound_icons():
     return mute_icon, unmute_icon, rect
 
 def load_sfx_icons() : 
-    sound_mute_icon = pygame.image.load("assets/images/sound_on.png")
-    sound_unmute_icon = pygame.image.load("assets/images/sound_off.png")
+    sound_mute_icon = pygame.image.load("assets/images/sound_off.png")
+    sound_unmute_icon = pygame.image.load("assets/images/sound_on.png")
     sound_mute_icon = pygame.transform.scale(sound_mute_icon, (40, 40))
     sound_unmute_icon = pygame.transform.scale(sound_unmute_icon, (40, 40))
 
