@@ -44,3 +44,23 @@ def handle_sfx_click(event, rect, sound_muted):
     if rect.collidepoint(event.pos):
         sound_muted = not sound_muted
     return sound_muted
+
+def key_chalk(): 
+    key_states = [False]
+    key_sound = pygame.mixer.Sound("asset/music/key_chalk.wav")
+    pressed = pygame.key.get_pressed
+    for key_code in range(len(pressed)): 
+        if pressed[key_code]: 
+
+            key_name = pygame.key.name(key_code)
+            if key_name.isalpha(): 
+                if not key_states[key_code]: 
+                    key_sound.play()
+                    
+                key_states[key_code] = True 
+            else:
+                key_states[key_code] = False 
+
+                
+                     
+
