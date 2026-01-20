@@ -1,11 +1,13 @@
 import pygame 
+pygame.init()
+pygame.mixer.init()
+pygame.display.init()
+
 from word_list_editor import *
 from score_board import *
 from sound_control import *
 from current_game import *
 
-pygame.init()
-pygame.mixer.init()
 pygame.mixer.music.load("assets/music/background_music.mp3")
 pygame.mixer.music.play(-1)
 
@@ -112,7 +114,7 @@ while running:
 
             if btn1_rect.collidepoint(event.pos): 
                 new_game_menu(screen, blackboard, button_font,
-                mute_icon, unmute_icon, sound_rect, is_muted, sound_muted)
+                mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, 6)
 
             if btn2_rect.collidepoint(event.pos):
                 word_list_menu(screen, width, blackboard, button_font,
