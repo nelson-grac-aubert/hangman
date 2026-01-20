@@ -1,18 +1,5 @@
 import pygame
-
-def is_valid_word(word):
-    """Return True only if the word contains letters only."""
-    return all(ch.isalpha() for ch in word)
-
-def load_words():
-    """ Reads the words.txt file and returns a list of words """
-    with open("words.txt", "r", encoding="utf-8") as f:
-        return [w.strip() for w in f.readlines()]
-
-def save_words(words):
-    """ Writes a new word entry into words.txt file """
-    with open("words.txt", "w", encoding="utf-8") as f:
-        f.write("\n".join(words))
+from txt_file_management import is_valid_word, load_words, save_words
 
 def draw_error_message(screen, width, error_message, error_start_time):
     """Draws a fading error message and returns updated error_message."""
