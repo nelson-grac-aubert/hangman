@@ -15,6 +15,7 @@ screen = pygame.display.set_mode((width, height))
 
 # SOUND ICONS
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
+sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
 # BACKGROUND 
 
@@ -75,6 +76,7 @@ pygame.display.set_caption('Hangman')
 
 running = True
 is_muted = False
+sound_muted = False
 main_menu = True 
 
 while running:
@@ -84,6 +86,7 @@ while running:
     screen.blit(title_surface, title_rect)
 
     draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
+    draw_sfx_button(screen, sound_muted, sound_mute_icon, sound_unmute_icon, sfx_rect)
     
     clock.tick(30)
 
@@ -105,6 +108,7 @@ while running:
                 difficulty_index = (difficulty_index + 1) % len(difficulty_levels)
             
             is_muted = handle_sound_click(event, sound_rect, is_muted)
+            sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
             if btn1_rect.collidepoint(event.pos): 
                 new_game_menu(screen, width, blackboard, button_font,
@@ -112,7 +116,7 @@ while running:
 
             if btn2_rect.collidepoint(event.pos):
                 word_list_menu(screen, width, blackboard, button_font,
-                mute_icon, unmute_icon, sound_rect, is_muted)
+                mute_icon, unmute_icon, sound_rect, is_muted, sound_muted)
 
             if btn3_rect.collidepoint(event.pos):  
                 score_board_menu(screen, width, blackboard, button_font, is_muted)

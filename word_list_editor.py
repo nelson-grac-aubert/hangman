@@ -4,6 +4,7 @@ from sound_control import *
 
 # SOUND ICON
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
+sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
 def draw_error_message(screen, width, error_message, error_start_time):
     """Draws a fading error message and returns updated error_message."""
@@ -45,7 +46,7 @@ def draw_word_list(screen, words, selected_index, words_font,
 
 
 def word_list_menu(screen, width, blackboard, button_font,
-                   mute_icon, unmute_icon, sound_rect, is_muted):
+                   mute_icon, unmute_icon, sound_rect, is_muted, sound_muted):
 
     """ Handles the menu to edit the hangman list of words """
     words = load_words()
@@ -60,6 +61,7 @@ def word_list_menu(screen, width, blackboard, button_font,
         screen.blit(blackboard, (0, 0))
 
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
+        draw_sfx_button(screen, sound_muted, sound_mute_icon, sound_unmute_icon, sfx_rect)
 
         # Title
         title_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 40)
@@ -115,6 +117,7 @@ def word_list_menu(screen, width, blackboard, button_font,
             if event.type == pygame.MOUSEBUTTONDOWN:
                 
                 is_muted = handle_sound_click(event, sound_rect, is_muted)
+                sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
                 if add_btn.collidepoint(event.pos):
                     new_word = input_text.strip()
