@@ -37,8 +37,21 @@ def draw_error_message(screen, width, error_message, error_start_time):
 
     return error_message
 
-def word_list_menu(screen, width, blackboard, button_font):
+def draw_word_list(screen, words, selected_index, words_font,
+                   start_x, start_y, col_width, line_spacing, max_per_column):
+    """Draws the list of words in columns."""
+    for i, w in enumerate(words):
+        col = i // max_per_column
+        row = i % max_per_column
 
+        x = start_x + col * col_width
+        y = start_y + row * line_spacing
+
+        color = (144, 213, 255) if i == selected_index else (255, 255, 255)
+        txt = words_font.render(w, True, color)
+        screen.blit(txt, (x, y))
+
+def word_list_menu(screen, width, blackboard, button_font):
     """ Handles the menu to edit the hangman list of words """
     words = load_words()
     input_text = ""
@@ -49,7 +62,6 @@ def word_list_menu(screen, width, blackboard, button_font):
 
     running_menu = True
     while running_menu:
-        screen.fill("white")
         screen.blit(blackboard, (0, 0))
 
         # Title
@@ -66,16 +78,8 @@ def word_list_menu(screen, width, blackboard, button_font):
         start_y = 80
         line_spacing = 28
 
-        for i, w in enumerate(words):
-            col = i // max_per_column         
-            row = i % max_per_column          
-
-            x = start_x + col * col_width
-            y = start_y + row * line_spacing
-
-            color = (144, 213, 255) if i == selected_index else (255, 255, 255)
-            txt = words_font.render(w, True, color)
-            screen.blit(txt, (x, y))
+        draw_word_list(screen, words, selected_index, words_font,
+        start_x, start_y, col_width, line_spacing, max_per_column)
 
         # Input box
         pygame.draw.rect(screen, (255,255,255), (550, 390, 300, 40), 2)
@@ -137,7 +141,6 @@ def word_list_menu(screen, width, blackboard, button_font):
                 if back_btn.collidepoint(event.pos):
                     running_menu = False
 
-               
                 # Select word
                 for i in range(len(words)):
                     col = i // max_per_column
