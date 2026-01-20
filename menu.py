@@ -1,22 +1,20 @@
 import pygame 
-from word_list_editor import word_list_menu
+from word_list_editor import *
+from score_board import *
+from sound_control import *
+from current_game import *
 
 pygame.init()
 pygame.mixer.init()
+pygame.mixer.music.load("assets/music/background_music.mp3")
+pygame.mixer.music.play(-1)
 
 (width, height) = (1000, 600)
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((width, height))
 
-# SOUND
-pygame.mixer.music.load("assets/music/background_music.mp3")
-pygame.mixer.music.play(-1)
-# sound icons
-mute_icon = pygame.image.load("assets/images/music.png")
-unmute_icon = pygame.image.load("assets/images/music_off.png")
-mute_icon = pygame.transform.scale(mute_icon, (40, 40))
-unmute_icon = pygame.transform.scale(unmute_icon, (40, 40))
-icon_rect = mute_icon.get_rect(topleft=(900, 545))
+# SOUND ICONS
+mute_icon, unmute_icon, sound_rect = load_sound_icons()
 
 # BACKGROUND 
 
@@ -85,7 +83,7 @@ while running:
 
     screen.blit(title_surface, title_rect)
 
-    screen.blit(mute_icon if not is_muted else unmute_icon, icon_rect)
+    draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
     
     clock.tick(30)
 
@@ -105,16 +103,19 @@ while running:
                 difficulty_index = (difficulty_index - 1) % len(difficulty_levels)
             elif right_arrow_rect.collidepoint(event.pos):
                 difficulty_index = (difficulty_index + 1) % len(difficulty_levels)
+            
+            is_muted = handle_sound_click(event, sound_rect, is_muted)
 
-            if icon_rect.collidepoint(event.pos):
-                is_muted = not is_muted
-                if is_muted:
-                    pygame.mixer.music.pause()
-                else:
-                    pygame.mixer.music.unpause()
+            if btn1_rect.collidepoint(event.pos): 
+                new_game_menu(screen, width, blackboard, button_font,
+                mute_icon, unmute_icon, sound_rect, is_muted)
 
             if btn2_rect.collidepoint(event.pos):
-                word_list_menu(screen, width, blackboard, button_font)
+                word_list_menu(screen, width, blackboard, button_font,
+                mute_icon, unmute_icon, sound_rect, is_muted)
+
+            if btn3_rect.collidepoint(event.pos):  
+                score_board_menu(screen, width, blackboard, button_font, is_muted)
 
         if event.type == pygame.QUIT:
             running = False
