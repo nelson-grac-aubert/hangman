@@ -14,6 +14,29 @@ def save_words(words):
     with open("words.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(words))
 
+def draw_error_message(screen, width, error_message, error_start_time):
+    """Draws a fading error message and returns updated error_message."""
+    if not error_message:
+        return error_message
+
+    elapsed = pygame.time.get_ticks() - error_start_time
+
+    if elapsed < 3000:
+        alpha = max(0, 255 - int((elapsed / 2000) * 255))
+
+        err_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+        err_text = err_font.render(error_message, True, (255, 0, 0))
+        err_text.set_alpha(alpha)
+
+        screen.blit(
+            err_text,
+            (width//2 - err_text.get_width()//2, 330)
+        )
+    else:
+        error_message = ""
+
+    return error_message
+
 def word_list_menu(screen, width, blackboard, button_font):
 
     """ Handles the menu to edit the hangman list of words """
@@ -68,23 +91,8 @@ def word_list_menu(screen, width, blackboard, button_font):
         screen.blit(button_font.render("Delete", True, (255,255,255)), (del_btn.x+25, del_btn.y+5))
         screen.blit(button_font.render("Back to main menu", True, (0,0,0)), (back_btn.x+100, back_btn.y+5))
 
-        # --- ERROR MESSAGE (fade-out) ---
-        if error_message:
-            elapsed = pygame.time.get_ticks() - error_start_time
-
-            if elapsed < 3000:
-                alpha = max(0, 255 - int((elapsed / 2000) * 255))
-
-                err_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
-                err_text = err_font.render(error_message, True, (255, 0, 0))
-                err_text.set_alpha(alpha)
-
-                screen.blit(
-                    err_text,
-                    (width//2 - err_text.get_width()//2, 330)
-                )
-            else:
-                error_message = ""  # message terminé
+        # Fading out error message
+        error_message = draw_error_message(screen, width, error_message, error_start_time)
 
         pygame.display.flip()
 
@@ -111,7 +119,7 @@ def word_list_menu(screen, width, blackboard, button_font):
                         continue
 
                     if not is_valid_word(new_word):
-                        error_message = "Caractère non autorisé"
+                        error_message = "Unauthorized character"
                         error_start_time = pygame.time.get_ticks()
                         input_text = ""
                         continue

@@ -23,10 +23,9 @@ icon_rect = mute_icon.get_rect(topleft=(900, 545))
 blackboard = pygame.image.load("assets/images/blackboard.png")
 blackboard = pygame.transform.scale(blackboard, (1000, 600))
 
-# FONT
-chalk_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 60)
 # TITLE
-title_surface = chalk_font.render('Hangman', False, (255, 255, 255))
+title_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 60)
+title_surface = title_font.render('Hangman', False, (255, 255, 255))
 title_rect = title_surface.get_rect(center=(width // 2, 120))
 
 # BUTTONS
@@ -45,7 +44,6 @@ btn4_rect = pygame.Rect(btn_x, start_y + spacing * 3, btn_w, btn_h)  # Difficult
 # difficulty arrows
 difficulty_levels = ["Easy", "Medium", "Hard", "Impossible"]
 difficulty_index = 1  # Starts at medium
-
 arrow_size = 35
 left_arrow_rect  = pygame.Rect(btn4_rect.x - arrow_size - 70, btn4_rect.y + 10, arrow_size, arrow_size)
 right_arrow_rect = pygame.Rect(btn4_rect.right + 70, btn4_rect.y + 10, arrow_size, arrow_size)
