@@ -1,7 +1,7 @@
 import pygame
 
 #Reduce latency
-pygame.mixer.pre_init(44100, -16, 1, 64)
+pygame.mixer.pre_init(44100, -16, 1, 32)
 pygame.init()
 pygame.mixer.init()
 
@@ -18,7 +18,7 @@ key_sound.set_volume(1.0)
 screen = pygame.display.set_mode((1000, 600))
 white = (255, 255, 255)
 
-#Icon
+#Icons
 mute_icon = pygame.image.load("Musique/music.png")
 unmute_icon = pygame.image.load("Musique/music_off.png")
 
@@ -30,6 +30,9 @@ icon_rect = mute_icon.get_rect(topleft=(10, 10))
 is_muted = False
 running = True
 
+#Key memory to avoid repetition
+key_states = [False] * 512
+
 #Loop
 while running:
     screen.fill(white)
@@ -39,16 +42,34 @@ while running:
 
     pygame.display.update()
 
+    #Instant press
+    pressed = pygame.key.get_pressed()
+
+    #All keys
+    for key_code in range(len(pressed)):
+        if pressed[key_code]:  # si la touche est pressée
+
+            key_name = pygame.key.name(key_code)
+
+            
+            if key_name.isalpha():
+
+                
+                if not key_states[key_code]:
+                    key_sound.play()
+                    print("Lettre pressée :", key_name)
+
+                key_states[key_code] = True
+            else:
+                key_states[key_code] = False
+        else:
+            key_states[key_code] = False
+
+    #Quit
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-        #Key sound
-        if event.type == pygame.KEYDOWN:
-            key_sound.play()
-            print("Touche pressée :", pygame.key.name(event.key))
-
-        #Mute/Unmute
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if icon_rect.collidepoint(event.pos):
                 is_muted = not is_muted
