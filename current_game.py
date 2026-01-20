@@ -16,8 +16,8 @@ def new_game_menu(screen, width, blackboard, button_font,
                   mute_icon, unmute_icon, sound_rect, is_muted, sound_muted):
     """Main loop for the New Game screen."""
 
-    running = True
-    while running:
+    in_game = True
+    while in_game:
         screen.blit(blackboard, (0, 0))
 
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
@@ -30,17 +30,17 @@ def new_game_menu(screen, width, blackboard, button_font,
 
         for event in pygame.event.get():
 
-            handle_sound_click(event, sound_rect, is_muted)
-            handle_sfx_click(event, sfx_rect, sound_muted)
-
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                
+                handle_sound_click(event, sound_rect, is_muted)
+                handle_sfx_click(event, sfx_rect, sound_muted)
 
                 # Back button
                 if back_btn.collidepoint(event.pos):
-                    running = False
+                    in_game = False
 
     return is_muted
