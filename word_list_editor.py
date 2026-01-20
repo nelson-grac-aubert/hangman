@@ -13,8 +13,8 @@ def draw_error_message(screen, width, error_message, error_start_time):
 
     elapsed = pygame.time.get_ticks() - error_start_time
 
-    if elapsed < 5000:
-        alpha = max(0, 255 - int((elapsed / 2000) * 255))
+    if elapsed < 3000:
+        alpha = max(0, 255 - int((elapsed / 3000) * 255))
 
         err_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
         err_text = err_font.render(error_message, True, (255, 0, 0))
