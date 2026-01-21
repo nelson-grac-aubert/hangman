@@ -2,20 +2,20 @@ Upperletter = [["A","À","Â","Ä"],"B",["C","Ç"],"D",["E","É","È","Ê","Ë"]
 Lowerletter = ["a","à","â","ä"],"b",["c","ç"],"d",["e","é","è","ê","ë"],"f","g","h",["i","î","ï"],"j","k","l","m","n",["o","ô","ö"],"p","q","r","s","t",["u","ù","û","ü"],"v","w","x",["y","ÿ"],"z"
 Specials = [" ",",",".","-","'"]
 
-from txt_file_management import load_words, is_valid_word
+from txt_file_management import *
 import pygame
 import random
 
+
 def choose_mystery_word(filepath="words.txt"):
     """Loads words.txt, gets a random valid word, format it"""
-    words = load_words(filepath)
 
-    valid_words = [w for w in words if is_valid_word(w)]
+    word_list = establish_difficulty_word_list(get_difficulty())
 
-    if not valid_words:
+    if not word_list:
         raise ValueError("Aucun mot valide trouvé dans words.txt")
 
-    return random.choice(valid_words)
+    return random.choice(word_list)
 
 
 def format_mystery_word(word, specials):
