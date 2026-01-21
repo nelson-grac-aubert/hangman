@@ -1,6 +1,15 @@
 def is_valid_word(word: str) -> bool:
-    """Return True only if the word contains letters only"""
-    return word.isalpha()
+    """Return True if the word contains only allowed characters."""
+    allowed_specials = set(" ,.-'") 
+
+    for char in word:
+        if char.isalpha():
+            continue
+        if char in allowed_specials:
+            continue
+        return False
+
+    return True
 
 def load_words(filepath: str = "words.txt") -> list[str]:
     """Reads the words.txt file and returns a list of words"""
