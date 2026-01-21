@@ -41,7 +41,7 @@ def Checkinput(Guess,Upper,Lower):
     return False
 
 
-def Gameturn_pygame(event, Word, Upper, Lower, Foundletters):
+def Gameturn_pygame(event, Word, Upper, Lower, Foundletters, Wrongletters):
     """ Game turn handling with pygame keyboard input """
 
     if event.type != pygame.KEYDOWN:
@@ -57,7 +57,7 @@ def Gameturn_pygame(event, Word, Upper, Lower, Foundletters):
 
     normalized_letter = Upper[Checkresult][0]
 
-    if normalized_letter in Foundletters:
+    if normalized_letter in Foundletters or normalized_letter in Wrongletters :
         return [True]
 
     Matchlist = []
