@@ -23,14 +23,14 @@ def draw_back_button(screen, button_font):
 
 def draw_scores(screen, scores, width):
     """Draws the list of scores (simple version, modifiable later)."""
-    font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 25)
+    font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 22)
 
-    start_y = 120
-    spacing = 27
+    start_y = 90
+    spacing = 26
 
     for i, score in enumerate(scores):
         txt = font.render(f"{score}", True, (255, 255, 255))
-        screen.blit(txt, (width//2 - txt.get_width()//2, start_y + i * spacing))
+        screen.blit(txt, (140, start_y + i * spacing))
 
 
 def score_board_menu(screen, width, blackboard, button_font, is_muted, sound_muted):
