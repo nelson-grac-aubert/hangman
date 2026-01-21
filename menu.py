@@ -7,6 +7,7 @@ from word_list_editor import *
 from score_board import *
 from sound_control import *
 from current_game import *
+from sound_control import play_mouse_click
 
 pygame.mixer.music.load("assets/music/background_music.mp3")
 pygame.mixer.music.play(-1)
@@ -99,29 +100,33 @@ while running:
 
     draw_arrow(screen, left_arrow_rect, "left")
     draw_arrow(screen, right_arrow_rect, "right")
-
+    
+    
     pygame.display.flip()
 
     for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if left_arrow_rect.collidepoint(event.pos):
-                difficulty_index = (difficulty_index - 1) % len(difficulty_levels)
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+            print("m")
+            play_mouse_click(sound_muted)
+
+            if left_arrow_rect.collidepoint(event.pos): 
+                difficulty_index = (difficulty_index - 1) %len(difficulty_levels)
             elif right_arrow_rect.collidepoint(event.pos):
-                difficulty_index = (difficulty_index + 1) % len(difficulty_levels)
-            
+                 difficulty_index = (difficulty_index + 1) % len(difficulty_levels)
+
             is_muted = handle_sound_click(event, sound_rect, is_muted)
             sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
-            if btn1_rect.collidepoint(event.pos): 
+            if btn1_rect.collidepoint(event.pos):
                 new_game_menu(screen, blackboard, button_font,
-                mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, 6)
+                mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, 6) 
 
             if btn2_rect.collidepoint(event.pos):
                 word_list_menu(screen, width, blackboard, button_font,
                 mute_icon, unmute_icon, sound_rect, is_muted, sound_muted)
 
-            if btn3_rect.collidepoint(event.pos):  
+            if btn3_rect.collidepoint(event.pos):
                 score_board_menu(screen, width, blackboard, button_font, is_muted, sound_muted)
 
-        if event.type == pygame.QUIT:
-            running = False
+        elif event.type == pygame.QUIT:
+            running = False               
