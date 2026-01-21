@@ -17,8 +17,6 @@ def choose_mystery_word(filepath="words.txt"):
 
     return random.choice(valid_words)
 
-# mot_a_tester = choose_mystery_word("words.txt")
-# print(mot_a_tester)
 
 def format_mystery_word(word, specials):
     """Format the chosen mystery word into Guessing and Wordlist lists."""
@@ -34,8 +32,6 @@ def format_mystery_word(word, specials):
 
     return Guessing, Wordlist
 
-# listes_formatees = format_mystery_word(mot_a_tester, Specials)
-# print(listes_formatees)
 
 def Checkinput(Guess,Upper,Lower):
     """ Check if keyboard input is in the word """
@@ -46,18 +42,7 @@ def Checkinput(Guess,Upper,Lower):
 
 
 def Gameturn_pygame(event, Word, Upper, Lower, Foundletters):
-    """
-    - event : un événement pygame.KEYDOWN
-    - Word : liste des caractères du mot mystère
-    - Upper, Lower : tables de correspondance
-    - Foundletters : lettres déjà trouvées (majuscules normalisées)
-    
-    Retourne :
-        - [True] si lettre déjà trouvée
-        - [Matchlist, [Lettre]] si bonne lettre
-        - [False, [Lettre]] si mauvaise lettre
-        - None si l'événement ne correspond pas à une lettre
-    """
+    """ Game turn handling with pygame keyboard input """
 
     if event.type != pygame.KEYDOWN:
         return None

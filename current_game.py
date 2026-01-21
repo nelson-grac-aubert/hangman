@@ -45,7 +45,7 @@ def draw_wrong_letters(screen, font, wrong_letters, x, y):
 def new_game_menu(screen, blackboard, button_font,
                   mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, lives_remaining):
 
-    # --- Initialisation du jeu ---
+    # INITIALIZE GAME
     Word = choose_mystery_word()
     Guessing, Wordlist = format_mystery_word(Word, Specials)
     Foundletters = []
@@ -80,7 +80,7 @@ def new_game_menu(screen, blackboard, button_font,
                 pygame.quit()
                 exit()
 
-            # --- Gestion clavier ---
+            # KEYBOARD
             if event.type == pygame.KEYDOWN:
                 result = Gameturn_pygame(event, Wordlist, Upperletter, Lowerletter, Foundletters)
 
@@ -88,7 +88,7 @@ def new_game_menu(screen, blackboard, button_font,
                     continue
 
                 if result == [True]:
-                    pass  # lettre déjà trouvée
+                    pass
 
                 elif result[0] is False:
                     lives_remaining -= 1
@@ -103,10 +103,11 @@ def new_game_menu(screen, blackboard, button_font,
                     for pos in Matchlist:
                         Guessing[pos] = Wordlist[pos]
 
+                # WIN
                 if "_" not in Guessing:
                     in_game = False
                     Wrongletters = []
-
+                # LOSS
                 if lives_remaining <= 0:
                     in_game = False
                     Wrongletters = []
