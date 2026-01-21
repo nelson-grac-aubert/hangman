@@ -1,5 +1,8 @@
 import pygame
 pygame.init()
+pygame.mixer.init()
+pygame.display.init()
+pygame.display.set_caption('Hangman')
 
 from word_list_editor import *
 from score_board import *
@@ -23,7 +26,7 @@ clock = pygame.time.Clock()
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
 sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
-#  BACKGROUND
+# BACKGROUND 
 blackboard = pygame.image.load("assets/images/blackboard.png")
 blackboard = pygame.transform.scale(blackboard, (1000, 600))
 
@@ -59,6 +62,7 @@ def draw_button(surface, rect, text, font):
     txt_rect = txt.get_rect(center=rect.center)
     surface.blit(txt, txt_rect)
 
+
 def draw_arrow(surface, rect, direction):
     if direction == "left":
         points = [
@@ -80,10 +84,8 @@ is_muted = False
 sound_muted = False
 
 while running:
-    screen.fill("white")
-    screen.blit(blackboard, (0, 0))
 
-    # Title
+    screen.blit(blackboard,(0,0))
     screen.blit(title_surface, title_rect)
 
     # Icons sound
@@ -121,11 +123,13 @@ while running:
             is_muted = handle_sound_click(event, sound_rect, is_muted)
             sound_muted = handle_sfx_click(event, sfx_rect, sound_muted)
 
-            # Button 
-            if btn1_rect.collidepoint(event.pos):
-                new_game_menu(screen, blackboard, button_font,
-                              mute_icon, unmute_icon, sound_rect,
-                              is_muted, sound_muted, 6)
+            if btn1_rect.collidepoint(event.pos): 
+                result = new_game_menu(screen, blackboard, button_font,
+                mute_icon, unmute_icon, sound_rect,is_muted, sound_muted, 6)
+
+                while result == "restart":
+                    result = new_game_menu(screen, blackboard, button_font,
+                    mute_icon, unmute_icon, sound_rect,is_muted, sound_muted, 6)
 
             if btn2_rect.collidepoint(event.pos):
                 word_list_menu(screen, width, blackboard, button_font,
