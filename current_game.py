@@ -64,8 +64,8 @@ def new_game_menu(screen, blackboard, button_font,
         draw_hangman(screen, lives_remaining, 125, 80)
 
         wrong_label = button_font.render("letters not in word :", True, (255, 255, 255))
-        screen.blit(wrong_label, (450, 300))
-        draw_wrong_letters(screen, button_font, Wrongletters, 450, 330)
+        screen.blit(wrong_label, (550, 300))
+        draw_wrong_letters(screen, button_font, Wrongletters, 550, 330)
 
         # CURRENT WORD
         word_str = " ".join(Guessing)
