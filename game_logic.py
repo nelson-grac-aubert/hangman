@@ -3,6 +3,7 @@ Lowerletter = ["a","à","â","ä"],"b",["c","ç"],"d",["e","é","è","ê","ë"],
 Specials = [" ",",",".","-","'"]
 
 from txt_file_management import load_words, is_valid_word
+import pygame
 import random
 
 def choose_mystery_word(filepath="words.txt"):
@@ -16,8 +17,8 @@ def choose_mystery_word(filepath="words.txt"):
 
     return random.choice(valid_words)
 
-mot_a_tester = choose_mystery_word("words.txt")
-print(mot_a_tester)
+# mot_a_tester = choose_mystery_word("words.txt")
+# print(mot_a_tester)
 
 def format_mystery_word(word, specials):
     """Format the chosen mystery word into Guessing and Wordlist lists."""
@@ -33,8 +34,56 @@ def format_mystery_word(word, specials):
 
     return Guessing, Wordlist
 
-listes_formatees = format_mystery_word(mot_a_tester, Specials)
-print(listes_formatees)
+# listes_formatees = format_mystery_word(mot_a_tester, Specials)
+# print(listes_formatees)
+
+def Checkinput(Guess,Upper,Lower):
+    """ Check if keyboard input is in the word """
+    for i in range(26):
+        if Guess in Upper[i] or Guess in Lower[i]:
+            return i
+    return False
 
 
+def Gameturn_pygame(event, Word, Upper, Lower, Foundletters):
+    """
+    - event : un événement pygame.KEYDOWN
+    - Word : liste des caractères du mot mystère
+    - Upper, Lower : tables de correspondance
+    - Foundletters : lettres déjà trouvées (majuscules normalisées)
+    
+    Retourne :
+        - [True] si lettre déjà trouvée
+        - [Matchlist, [Lettre]] si bonne lettre
+        - [False, [Lettre]] si mauvaise lettre
+        - None si l'événement ne correspond pas à une lettre
+    """
 
+    if event.type != pygame.KEYDOWN:
+        return None
+
+    Guess = event.unicode
+    if Guess == "":
+        return None 
+
+    Checkresult = Checkinput(Guess, Upper, Lower)
+    if Checkresult is False:
+        return None
+
+    normalized_letter = Upper[Checkresult][0]
+
+    if normalized_letter in Foundletters:
+        return [True]
+
+    Matchlist = []
+    for i in range(len(Word)):
+        if Word[i] in Upper[Checkresult] or Word[i] in Lower[Checkresult]:
+            Matchlist.append(i)
+
+    if Matchlist:
+        return [Matchlist, [normalized_letter]]
+    else:
+        return [False, [normalized_letter]]
+
+
+    
