@@ -1,5 +1,6 @@
 import pygame
 from sound_control import * 
+from score_management import load_scores
 
 # SOUND ICON
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
@@ -22,22 +23,21 @@ def draw_back_button(screen, button_font):
 
 def draw_scores(screen, scores, width):
     """Draws the list of scores (simple version, modifiable later)."""
-    font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 30)
+    font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 22)
 
-    start_y = 120
-    spacing = 40
+    start_y = 90
+    spacing = 26
 
     for i, score in enumerate(scores):
-        txt = font.render(f"{i+1}. {score}", True, (255, 255, 255))
-        screen.blit(txt, (width//2 - txt.get_width()//2, start_y + i * spacing))
+        txt = font.render(f"{score}", True, (255, 255, 255))
+        screen.blit(txt, (140, start_y + i * spacing))
 
 
 def score_board_menu(screen, width, blackboard, button_font, is_muted, sound_muted):
     """Main loop for the score board screen."""
-    
-    scores = ["Alice - 12", "Bob - 9", "Charlie - 7"]
 
     score_screen = True
+    scores = load_scores()
     while score_screen:
         screen.blit(blackboard, (0, 0))
 

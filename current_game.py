@@ -3,6 +3,7 @@ from sound_control import *
 from game_logic import * 
 from game_logic import (choose_mystery_word,format_mystery_word,Checkinput,
     Gameturn_pygame,Upperletter,Lowerletter,Specials)
+from score_management import ask_player_name, save_score
 
 game_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
 
@@ -46,35 +47,66 @@ def draw_wrong_letters(screen, font, wrong_letters, x, y):
 def end_screen(screen, blackboard, button_font, win, word, lives):
     running = True
 
-    # BUTTONS
-    play_btn = pygame.Rect(300, 400, 250, 60)
-    menu_btn = pygame.Rect(300, 480, 250, 60)
+    play_btn = pygame.Rect(0, 0, 250, 60)
+    menu_btn = pygame.Rect(0, 0, 250, 60)
+    save_btn = pygame.Rect(0, 0, 250, 60)
 
     while running:
         screen.blit(blackboard, (0, 0))
+
+        # Draw hangman
         draw_hangman(screen, lives, 125, 80)
 
-        #  WIN / GAME OVER
+        # WIN / GAME OVER message
         if win:
             msg = f"You win! The word was: {word}"
+            save_btn.center = (screen.get_width() // 2, 380)
         else:
             msg = f"Game Over! The word was: {word}"
 
         label = button_font.render(msg, True, (255,255,255))
-        label_rect = label.get_rect(center=(screen.get_width() // 2, 295))
+        label_rect = label.get_rect(center=(screen.get_width() // 2, 300))
         screen.blit(label, label_rect)
 
-        play_btn.center = (screen.get_width() // 2 - 150, 350)
-        menu_btn.center = (screen.get_width() // 2 + 150, 350)
+        # Position buttons
+        play_btn.center = (screen.get_width() // 2 - 200, 380)
+        menu_btn.center = (screen.get_width() // 2 + 200, 380)
 
-        # DRAW BUTTONS
-        play_txt = button_font.render("Play Again", True, (255, 255, 255))
-        play_rect = play_txt.get_rect(center=(play_btn.centerx, play_btn.centery))
-        screen.blit(play_txt, play_rect)
+        # Draw buttons
+        def draw_btn(rect, text):
+            txt = button_font.render(text, True, (255,255,255))
+            txt_rect = txt.get_rect(center=rect.center)
+            screen.blit(txt, txt_rect)
 
-        menu_txt = button_font.render("Main Menu", True, (255, 255, 255))
-        menu_rect = menu_txt.get_rect(center=(menu_btn.centerx, menu_btn.centery))
-        screen.blit(menu_txt, menu_rect)
+        draw_btn(play_btn, "Play Again")
+        draw_btn(save_btn, "Save Score")
+        draw_btn(menu_btn, "Main Menu")
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_btn.collidepoint(event.pos):
+                    return "play"
+
+                if menu_btn.collidepoint(event.pos):
+                    return "menu"
+
+                if win and save_btn.collidepoint(event.pos):
+                    # Ask for name
+                    player_name = ask_player_name(screen, blackboard, button_font)
+
+                    # Save score
+                    if player_name.strip():
+                        save_score(player_name, word, lives)
+                    return "menu"
+
+                    # Return to victory screen (do NOT exit)
+                    # Simply continue the loop
 
         pygame.display.flip()
 
