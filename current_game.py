@@ -164,6 +164,7 @@ def new_game_menu(screen, blackboard, button_font,
             # KEYBOARD
             if event.type == pygame.KEYDOWN:
                 result = Gameturn_pygame(event, Wordlist, Upperletter, Lowerletter, Foundletters)
+                play_mouse_click(sound_muted)
 
                 if result is None:
                     continue

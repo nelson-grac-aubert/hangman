@@ -1,6 +1,8 @@
 import pygame
+
 pygame.init()
 pygame.mixer.init()
+
 pygame.display.init()
 pygame.display.set_caption('Hangman')
 
