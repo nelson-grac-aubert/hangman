@@ -6,7 +6,7 @@ def load_sound_icons():
     mute_icon = pygame.transform.scale(mute_icon, (40, 40))
     unmute_icon = pygame.transform.scale(unmute_icon, (40, 40))
 
-    rect = mute_icon.get_rect(topleft=(20, 545))  # bas-gauche
+    rect = mute_icon.get_rect(topleft=(20, 545)) 
 
     return mute_icon, unmute_icon, rect
 
@@ -16,7 +16,7 @@ def load_sfx_icons() :
     sound_mute_icon = pygame.transform.scale(sound_mute_icon, (40, 40))
     sound_unmute_icon = pygame.transform.scale(sound_unmute_icon, (40, 40))
 
-    rect = sound_mute_icon.get_rect(topleft=(70, 545))  # bas-gauche
+    rect = sound_mute_icon.get_rect(topleft=(70, 545))
 
     return sound_mute_icon, sound_unmute_icon, rect
 
