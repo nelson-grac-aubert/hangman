@@ -4,6 +4,8 @@ from game_logic import *
 from game_logic import (choose_mystery_word,format_mystery_word,Checkinput,
     Gameturn_pygame,Upperletter,Lowerletter,Specials)
 
+game_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
 sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
@@ -61,12 +63,8 @@ def end_screen(screen, blackboard, button_font, win, word):
         label_rect = label.get_rect(center=(screen.get_width() // 2, 250))
         screen.blit(label, label_rect)
 
-
-        y = 400 
-
-        play_btn.center = (screen.get_width() // 2 - 150, y)
-        menu_btn.center = (screen.get_width() // 2 + 150, y)
-
+        play_btn.center = (screen.get_width() // 2 - 150, 350)
+        menu_btn.center = (screen.get_width() // 2 + 150, 350)
 
         # DRAW BUTTONS
         play_txt = button_font.render("Play Again", True, (255, 255, 255))
@@ -113,13 +111,14 @@ def new_game_menu(screen, blackboard, button_font,
         draw_hangman(screen, lives_remaining, 125, 80)
 
         wrong_label = button_font.render("letters not in word :", True, (255, 255, 255))
-        screen.blit(wrong_label, (550, 300))
-        draw_wrong_letters(screen, button_font, Wrongletters, 550, 330)
+        screen.blit(wrong_label, (410, 95))
+        draw_wrong_letters(screen, button_font, Wrongletters, 415, 130)
 
         # CURRENT WORD
         word_str = " ".join(Guessing)
-        txt = button_font.render(word_str, True, (255, 255, 255))
-        screen.blit(txt, (150, 350))
+        txt = game_font.render(word_str, True, (255, 255, 255))
+        txt_rect = txt.get_rect(center=(screen.get_width() // 2, 350))
+        screen.blit(txt, txt_rect)
 
         pygame.display.flip()
 
@@ -158,7 +157,8 @@ def new_game_menu(screen, blackboard, button_font,
                     if choice == "play":
                         return "restart"
                     else:
-                        return is_muted
+                        return "menu"
+
 
                 # LOSS
                 if lives_remaining <= 0:
@@ -166,7 +166,8 @@ def new_game_menu(screen, blackboard, button_font,
                     if choice == "play":
                         return "restart"
                     else:
-                        return is_muted
+                        return "menu"
+
 
             # MOUSE
             if event.type == pygame.MOUSEBUTTONDOWN:
