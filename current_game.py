@@ -41,6 +41,55 @@ def draw_wrong_letters(screen, font, wrong_letters, x, y):
     screen.blit(label, (x, y))
 
 
+def end_screen(screen, blackboard, button_font, win, word):
+    running = True
+
+    # BUTTONS
+    play_btn = pygame.Rect(300, 400, 250, 60)
+    menu_btn = pygame.Rect(300, 480, 250, 60)
+
+    while running:
+        screen.blit(blackboard, (0, 0))
+
+        #  WIN / GAME OVER
+        if win:
+            msg = f"You win! The word was: {word}"
+        else:
+            msg = f"Game Over! The word was: {word}"
+
+        label = button_font.render(msg, True, (255,255,255))
+        label_rect = label.get_rect(center=(screen.get_width() // 2, 250))
+        screen.blit(label, label_rect)
+
+
+        y = 400 
+
+        play_btn.center = (screen.get_width() // 2 - 150, y)
+        menu_btn.center = (screen.get_width() // 2 + 150, y)
+
+
+        # DRAW BUTTONS
+        play_txt = button_font.render("Play Again", True, (255, 255, 255))
+        play_rect = play_txt.get_rect(center=(play_btn.centerx, play_btn.centery))
+        screen.blit(play_txt, play_rect)
+
+        menu_txt = button_font.render("Main Menu", True, (255, 255, 255))
+        menu_rect = menu_txt.get_rect(center=(menu_btn.centerx, menu_btn.centery))
+        screen.blit(menu_txt, menu_rect)
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_btn.collidepoint(event.pos):
+                    return "play"
+                if menu_btn.collidepoint(event.pos):
+                    return "menu"
+
 
 def new_game_menu(screen, blackboard, button_font,
                   mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, lives_remaining):
@@ -105,12 +154,19 @@ def new_game_menu(screen, blackboard, button_font,
 
                 # WIN
                 if "_" not in Guessing:
-                    in_game = False
-                    Wrongletters = []
+                    choice = end_screen(screen, blackboard, button_font, True, Word)
+                    if choice == "play":
+                        return "restart"
+                    else:
+                        return is_muted
+
                 # LOSS
                 if lives_remaining <= 0:
-                    in_game = False
-                    Wrongletters = []
+                    choice = end_screen(screen, blackboard, button_font, False, Word)
+                    if choice == "play":
+                        return "restart"
+                    else:
+                        return is_muted
 
             # MOUSE
             if event.type == pygame.MOUSEBUTTONDOWN:
