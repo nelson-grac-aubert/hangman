@@ -43,7 +43,7 @@ def draw_wrong_letters(screen, font, wrong_letters, x, y):
     screen.blit(label, (x, y))
 
 
-def end_screen(screen, blackboard, button_font, win, word):
+def end_screen(screen, blackboard, button_font, win, word, lives):
     running = True
 
     # BUTTONS
@@ -52,6 +52,7 @@ def end_screen(screen, blackboard, button_font, win, word):
 
     while running:
         screen.blit(blackboard, (0, 0))
+        draw_hangman(screen, lives, 125, 80)
 
         #  WIN / GAME OVER
         if win:
@@ -60,7 +61,7 @@ def end_screen(screen, blackboard, button_font, win, word):
             msg = f"Game Over! The word was: {word}"
 
         label = button_font.render(msg, True, (255,255,255))
-        label_rect = label.get_rect(center=(screen.get_width() // 2, 250))
+        label_rect = label.get_rect(center=(screen.get_width() // 2, 295))
         screen.blit(label, label_rect)
 
         play_btn.center = (screen.get_width() // 2 - 150, 350)
@@ -153,7 +154,7 @@ def new_game_menu(screen, blackboard, button_font,
 
                 # WIN
                 if "_" not in Guessing:
-                    choice = end_screen(screen, blackboard, button_font, True, Word)
+                    choice = end_screen(screen, blackboard, button_font, True, Word, lives_remaining)
                     if choice == "play":
                         return "restart"
                     else:
@@ -162,7 +163,7 @@ def new_game_menu(screen, blackboard, button_font,
 
                 # LOSS
                 if lives_remaining <= 0:
-                    choice = end_screen(screen, blackboard, button_font, False, Word)
+                    choice = end_screen(screen, blackboard, button_font, False, Word, lives_remaining)
                     if choice == "play":
                         return "restart"
                     else:
