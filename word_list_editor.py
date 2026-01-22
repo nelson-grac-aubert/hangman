@@ -31,19 +31,25 @@ def draw_error_message(screen, width, error_message, error_start_time):
 
 
 def draw_word_list(screen, words, selected_index, words_font,
-                   start_x, start_y, col_width, line_spacing, max_per_column):
-    """Draws the list of words in columns."""
-    for i, w in enumerate(words):
-        col = i // max_per_column
-        row = i % max_per_column
+                   start_x, start_y, col_width, line_spacing,
+                   visible_per_column, scroll_offset):
+
+    max_visible = visible_per_column * 2
+
+    visible_words = words[scroll_offset : scroll_offset + max_visible]
+
+    for i, w in enumerate(visible_words):
+        col = i // visible_per_column
+        row = i % visible_per_column
 
         x = start_x + col * col_width
         y = start_y + row * line_spacing
 
-        color = (144, 213, 255) if i == selected_index else (255, 255, 255)
+        real_index = scroll_offset + i
+        color = (144, 213, 255) if real_index == selected_index else (255, 255, 255)
+
         txt = words_font.render(w, True, color)
         screen.blit(txt, (x, y))
-
 
 def word_list_menu(screen, width, blackboard, button_font,
                    mute_icon, unmute_icon, sound_rect, is_muted, sound_muted):
@@ -55,6 +61,10 @@ def word_list_menu(screen, width, blackboard, button_font,
 
     error_message = ""
     error_start_time = 0
+
+    scroll_offset = 0
+    visible_per_column = 10
+    visible_total = visible_per_column * 2
 
     words_screen = True
     while words_screen:
@@ -78,7 +88,7 @@ def word_list_menu(screen, width, blackboard, button_font,
         line_spacing = 28
 
         draw_word_list(screen, words, selected_index, words_font,
-        start_x, start_y, col_width, line_spacing, max_per_column)
+        start_x, start_y, col_width, line_spacing,visible_per_column, scroll_offset)
 
         # Input box
         pygame.draw.rect(screen, (255,255,255), (550, 390, 300, 40), 2)
@@ -114,6 +124,11 @@ def word_list_menu(screen, width, blackboard, button_font,
                     if len(input_text) < 20:
                         input_text += event.unicode
 
+            if event.type == pygame.MOUSEWHEEL:
+                scroll_offset -= event.y  
+
+                scroll_offset = max(0, min(scroll_offset, max(0, len(words) - visible_total)))
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 
                 is_muted = handle_sound_click(event, sound_rect, is_muted)
@@ -145,13 +160,17 @@ def word_list_menu(screen, width, blackboard, button_font,
                     words_screen = False
 
                 # Select word
-                for i in range(len(words)):
-                    col = i // max_per_column
-                    row = i % max_per_column
+                for i in range(visible_total):
+                    real_index = scroll_offset + i
+                    if real_index >= len(words):
+                        break
+
+                    col = i // visible_per_column
+                    row = i % visible_per_column
 
                     x = start_x + col * col_width
                     y = start_y + row * line_spacing
 
                     rect = pygame.Rect(x, y, 300, line_spacing)
                     if rect.collidepoint(event.pos):
-                        selected_index = i
+                        selected_index = real_index

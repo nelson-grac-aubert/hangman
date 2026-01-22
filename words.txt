@@ -7,10 +7,6 @@ horloge
 idiome
 angelina
 l'apostrophe
-une, virgule
-dés àccènts
-un espace
-un.point.cest.tout
 nom-composé
 soleil
 tempête
@@ -19,7 +15,6 @@ rivière
 harmonie
 cascade
 pétale
-boussole
 triangle
 courage
 mélodie
@@ -30,7 +25,6 @@ porte-close
 mi-ombre
 clair-obscur
 sans bruit
-à rebours
 hors-jeu
 miroir brisé
 vent d’est
@@ -39,7 +33,6 @@ lune rousse
 ombre portée
 filigrane
 tournesol
-pinceau
 cavalier
 goutte d’eau
 papier-mâché

@@ -1,5 +1,6 @@
 # scores_management.py
 import pygame
+from txt_file_management import get_difficulty
 
 def ask_player_name(screen, blackboard, button_font):
     name = ""
@@ -40,7 +41,12 @@ def ask_player_name(screen, blackboard, button_font):
 
 def save_score(player_name, word, lives_left, filename="scores.txt"):
     """Append a formatted score line to the score file."""
-    line = f"{player_name} guessed '{word}' with {lives_left} lives remaining\n"
+    
+    score = lives_left * 100 + len(word) * 30
+    if get_difficulty() == "Impossible" : 
+        score += 500
+
+    line = f"{player_name} : {score}"
     with open(filename, "a", encoding="utf-8") as f:
         f.write(line)
 
@@ -53,6 +59,6 @@ def load_scores(filename="scores.txt", limit=10):
                     break
                 scores.append(line.strip())
     except FileNotFoundError:
-        pass  # Aucun score encore
+        pass
 
     return scores
