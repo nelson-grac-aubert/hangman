@@ -39,12 +39,16 @@ def ask_player_name(screen, blackboard, button_font):
 
     return name
 
-def save_score(player_name, word, lives_left, filename="scores.txt"):
-    """Append a formatted score line to the score file."""
-    
+def calculate_score(word, lives_left):
     score = lives_left * 100 + len(word) * 30
     if get_difficulty() == "Impossible" : 
         score += 500
+    return score
+
+def save_score(player_name, word, lives_left, filename="scores.txt"):
+    """Append a formatted score line to the score file."""
+    
+    score = calculate_score(word, lives_left)
 
     line = f"{player_name} : {score}"
     with open(filename, "a", encoding="utf-8") as f:

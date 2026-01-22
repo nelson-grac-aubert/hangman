@@ -3,7 +3,7 @@ from sound_control import *
 from game_logic import * 
 from game_logic import (choose_mystery_word,format_mystery_word,Checkinput,
     Gameturn_pygame,Upperletter,Lowerletter,Specials)
-from score_management import ask_player_name, save_score
+from score_management import ask_player_name, save_score, calculate_score
 
 game_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
 
@@ -60,17 +60,23 @@ def end_screen(screen, blackboard, button_font, win, word, lives):
         # WIN / GAME OVER message
         if win:
             msg = f"You win! The word was: {word}"
-            save_btn.center = (screen.get_width() // 2, 380)
+            score_msg = f"Your score is : {calculate_score(word, lives)}"
+            save_btn.center = (screen.get_width() // 2, 400)
         else:
             msg = f"Game Over! The word was: {word}"
+            score_msg = ""
 
         label = button_font.render(msg, True, (255,255,255))
-        label_rect = label.get_rect(center=(screen.get_width() // 2, 300))
+        label_rect = label.get_rect(center=(screen.get_width() // 2, 305))
         screen.blit(label, label_rect)
 
+        score_label = button_font.render(score_msg, True, (255,255,255))
+        score_label_rect = score_label.get_rect(center=(screen.get_width() // 2, 353))
+        screen.blit(score_label, score_label_rect)
+
         # Position buttons
-        play_btn.center = (screen.get_width() // 2 - 200, 380)
-        menu_btn.center = (screen.get_width() // 2 + 200, 380)
+        play_btn.center = (screen.get_width() // 2 - 200, 400)
+        menu_btn.center = (screen.get_width() // 2 + 200, 400)
 
         # Draw buttons
         def draw_btn(rect, text):
