@@ -1,9 +1,1 @@
-Nelson guessed une, virgule with 5 lives remaining
-Nelson guessed idiome with 6 lives remaining
-Angelina guessed brouillard with 4 lives remaining
-Nelson guessed une, virgule with 6 lives remaining
-Nelson guessed 'brouillard' with 6 lives remaining
-Nelson guessed 'idiome' with 6 lives remaining
-Yannis guessed 'pyramide' with 1 lives remaining
-Nelson guessed 'pyramide' with 3 lives remaining
-Bibibi guessed 'galaxie' with 4 lives remaining
+Nelson : 580
