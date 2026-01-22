@@ -25,6 +25,10 @@ def draw_scores(screen, scores, width):
     """Draws the list of scores (simple version, modifiable later)."""
     font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 22)
 
+    score_sorted = sorted(score,reserve = True )
+
+    top_score = score_sorted[:10]
+
     start_y = 90
     spacing = 26
 
