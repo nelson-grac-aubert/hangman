@@ -114,19 +114,6 @@ def end_screen(screen, blackboard, button_font, win, word, lives):
                     # Return to victory screen (do NOT exit)
                     # Simply continue the loop
 
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if play_btn.collidepoint(event.pos):
-                    return "play"
-                if menu_btn.collidepoint(event.pos):
-                    return "menu"
-
 
 def new_game_menu(screen, blackboard, button_font,
                   mute_icon, unmute_icon, sound_rect, is_muted, sound_muted, lives_remaining):
@@ -154,7 +141,7 @@ def new_game_menu(screen, blackboard, button_font,
         draw_wrong_letters(screen, button_font, Wrongletters, 415, 130)
 
         # CURRENT WORD
-        word_str = " ".join(Guessing)
+        word_str = " ".join([letter.upper() for letter in Guessing])
         txt = game_font.render(word_str, True, (255, 255, 255))
         txt_rect = txt.get_rect(center=(screen.get_width() // 2, 350))
         screen.blit(txt, txt_rect)

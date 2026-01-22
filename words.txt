@@ -3,8 +3,6 @@ pyramide
 galaxie
 fantome
 mystère
-horloge
-idiome
 angelina
 l'apostrophe
 nom-composé
@@ -25,7 +23,6 @@ porte-close
 mi-ombre
 clair-obscur
 sans bruit
-hors-jeu
 miroir brisé
 vent d’est
 chemin creux
@@ -50,6 +47,6 @@ pluie fine
 ciel ouvert
 basse-cour
 main levée
-double sens
 sans limite
 rêve éveillé
+nordine
