@@ -1,9 +1,8 @@
 import pygame
 from sound_control import * 
 from game_logic import * 
-from game_logic import (choose_mystery_word,format_mystery_word,Checkinput,
-    Gameturn_pygame,Upperletter,Lowerletter,Specials)
-from score_management import ask_player_name, save_score, calculate_score
+from game_logic import *
+from score_management import *
 
 game_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
 
