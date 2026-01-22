@@ -40,9 +40,10 @@ def score_board_menu(screen, width, blackboard, button_font, is_muted, sound_mut
     """Main loop for the score board screen."""
 
     score_screen = True
-    scores = load_scores()
+
     while score_screen:
         screen.blit(blackboard, (0, 0))
+        scores = load_scores() 
 
         draw_sound_button(screen, is_muted, mute_icon, unmute_icon, sound_rect)
         draw_sfx_button(screen, sound_muted, sound_mute_icon, sound_unmute_icon, sfx_rect)

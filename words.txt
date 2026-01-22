@@ -3,8 +3,6 @@ pyramide
 galaxie
 fantome
 mystère
-horloge
-idiome
 angelina
 l'apostrophe
 nom-composé
@@ -25,7 +23,6 @@ porte-close
 mi-ombre
 clair-obscur
 sans bruit
-hors-jeu
 miroir brisé
 vent d’est
 chemin creux
@@ -50,6 +47,56 @@ pluie fine
 ciel ouvert
 basse-cour
 main levée
-double sens
 sans limite
 rêve éveillé
+brise
+glace
+fleur
+piste
+rocher
+galet
+bruit
+lueur
+pavot
+silex
+givre
+écume
+bravo
+pivert
+lagune
+orages
+bassin
+ramure
+paille
+brouet
+cendre
+pivote
+serein
+marais
+goulet
+poulpe
+bassin
+ramone
+faucon
+gondol
+pivoin
+goblet
+sureau
+baryon
+pignon
+ramier
+goujon
+poulie
+bassin
+trempe
+goulet
+ramdam
+poulot
+sillon
+pignon
+grelot
+ramier
+goulet
+poulpe
+sureau
+trogne

@@ -52,15 +52,13 @@ def save_score(player_name, word, lives_left, filename="scores.txt"):
 
     line = f"{player_name} : {score}"
     with open(filename, "a", encoding="utf-8") as f:
-        f.write(line)
+        f.write(line + "\n")
 
-def load_scores(filename="scores.txt", limit=10):
+def load_scores(filename="scores.txt"):
     scores = []
     try:
         with open(filename, "r", encoding="utf-8") as f:
             for i, line in enumerate(f):
-                if i >= limit:
-                    break
                 scores.append(line.strip())
     except FileNotFoundError:
         pass

@@ -34,7 +34,7 @@ blackboard = pygame.transform.scale(blackboard, (1000, 600))
 # TITLE
 title_font = pygame.font.Font("assets/fonts/FrederickatheGreat-Regular.ttf", 60)
 title_surface = title_font.render("Hangman", True, (255, 255, 255))
-title_rect = title_surface.get_rect(center=(width // 2, 120))
+title_rect = title_surface.get_rect(center=(width // 2, 145))
 
 # BUTTONS
 button_font = pygame.font.Font("assets/fonts/FrederickatheGreat-Regular.ttf", 30)
