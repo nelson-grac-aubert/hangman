@@ -1,10 +1,11 @@
 import pygame
+from path_helper import resource_path
 from sound_control import * 
 from game_logic import * 
 from game_logic import *
 from score_management import *
 
-game_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+game_font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 45)
 
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
 sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
@@ -12,7 +13,7 @@ sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 def load_hangman_images():
     images = {}
     for i in range(7):
-        img = pygame.image.load(f"assets/images/{i}_lives.png")
+        img = pygame.image.load(resource_path(f"assets/images/{i}_lives.png"))
         images[i] = pygame.transform.smoothscale(img, (200, 200))
     return images
 

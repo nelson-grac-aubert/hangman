@@ -1,11 +1,3 @@
-Angelina : 410
-Yannis : 310
-Nelson : 480
-Igor : 480
-Julien : 410
-Juliette : 310
-Nordine : 640
-Natalia : 440
-Momo : 410
-Mariedu13 : 540
-Sofiane : 640
+Julie : 410
+Angelina : 540
+Yannis : 340
