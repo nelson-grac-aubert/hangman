@@ -1,6 +1,7 @@
 import pygame
 from txt_file_management import *
 from sound_control import * 
+from path_helper import resource_path
 
 # SOUND ICON
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
@@ -16,7 +17,7 @@ def draw_error_message(screen, width, error_message, error_start_time):
     if elapsed < 3000:
         alpha = max(0, 255 - int((elapsed / 3000) * 255))
 
-        err_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+        err_font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 45)
         err_text = err_font.render(error_message, True, (255, 0, 0))
         err_text.set_alpha(alpha)
 
@@ -74,12 +75,12 @@ def word_list_menu(screen, width, blackboard, button_font,
         draw_sfx_button(screen, sound_muted, sound_mute_icon, sound_unmute_icon, sfx_rect)
 
         # Title
-        title_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 40)
+        title_font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 40)
         title = title_font.render("Word List", True, (0,0,0))
         screen.blit(title, (width//2 - title.get_width()//2, 0))
 
         # Display words
-        words_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 25)
+        words_font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 25)
 
         max_per_column = 10
         col_width = 250   

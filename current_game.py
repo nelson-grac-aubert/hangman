@@ -1,11 +1,12 @@
 import pygame
+from path_helper import resource_path
 from sound_control import * 
 from game_logic import * 
 from game_logic import (choose_mystery_word,format_mystery_word,Checkinput,
     Gameturn_pygame,Upperletter,Lowerletter,Specials)
 from score_management import ask_player_name, save_score, calculate_score
 
-game_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 45)
+game_font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 45)
 
 mute_icon, unmute_icon, sound_rect = load_sound_icons()
 sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
@@ -13,7 +14,7 @@ sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 def load_hangman_images():
     images = {}
     for i in range(7):
-        img = pygame.image.load(f"assets/images/{i}_lives.png")
+        img = pygame.image.load(resource_path(f"assets/images/{i}_lives.png"))
         images[i] = pygame.transform.smoothscale(img, (200, 200))
     return images
 
@@ -113,19 +114,6 @@ def end_screen(screen, blackboard, button_font, win, word, lives):
 
                     # Return to victory screen (do NOT exit)
                     # Simply continue the loop
-
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if play_btn.collidepoint(event.pos):
-                    return "play"
-                if menu_btn.collidepoint(event.pos):
-                    return "menu"
 
 
 def new_game_menu(screen, blackboard, button_font,

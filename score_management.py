@@ -1,6 +1,7 @@
 # scores_management.py
 import pygame
 from txt_file_management import get_difficulty
+from path_helper import resource_path
 
 def ask_player_name(screen, blackboard, button_font):
     name = ""
@@ -51,13 +52,13 @@ def save_score(player_name, word, lives_left, filename="scores.txt"):
     score = calculate_score(word, lives_left)
 
     line = f"{player_name} : {score}"
-    with open(filename, "a", encoding="utf-8") as f:
+    with open(resource_path(filename), "a", encoding="utf-8") as f:
         f.write(line)
 
 def load_scores(filename="scores.txt", limit=10):
     scores = []
     try:
-        with open(filename, "r", encoding="utf-8") as f:
+        with open(resource_path(filename), "r", encoding="utf-8") as f:
             for i, line in enumerate(f):
                 if i >= limit:
                     break

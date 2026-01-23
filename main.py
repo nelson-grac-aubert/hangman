@@ -6,6 +6,7 @@ pygame.mixer.init()
 pygame.display.init()
 pygame.display.set_caption('Hangman')
 
+from path_helper import resource_path
 from word_list_editor import *
 from score_board import *
 from sound_control import *
@@ -14,7 +15,7 @@ from sound_control import *
 from txt_file_management import *
 
 # MUSIC 
-pygame.mixer.music.load("assets/music/background_music.mp3")
+pygame.mixer.music.load(resource_path("assets/music/background_music.mp3"))
 pygame.mixer.music.play(-1)
 
 # WINDOW
@@ -28,16 +29,16 @@ mute_icon, unmute_icon, sound_rect = load_sound_icons()
 sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
 # BACKGROUND 
-blackboard = pygame.image.load("assets/images/blackboard.png")
+blackboard = pygame.image.load(resource_path("assets/images/blackboard.png"))
 blackboard = pygame.transform.scale(blackboard, (1000, 600))
 
 # TITLE
-title_font = pygame.font.Font("assets/fonts/FrederickatheGreat-Regular.ttf", 60)
+title_font = pygame.font.Font(resource_path("assets/fonts/FrederickatheGreat-Regular.ttf"), 60)
 title_surface = title_font.render("Hangman", True, (255, 255, 255))
 title_rect = title_surface.get_rect(center=(width // 2, 120))
 
 # BUTTONS
-button_font = pygame.font.Font("assets/fonts/FrederickatheGreat-Regular.ttf", 30)
+button_font = pygame.font.Font(resource_path("assets/fonts/FrederickatheGreat-Regular.ttf"), 30)
 
 btn_w, btn_h = 220, 55
 btn_x = width // 2 - btn_w // 2

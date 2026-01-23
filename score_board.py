@@ -1,4 +1,5 @@
 import pygame
+from path_helper import resource_path
 from sound_control import * 
 from score_management import load_scores
 
@@ -8,7 +9,7 @@ sound_mute_icon, sound_unmute_icon, sfx_rect = load_sfx_icons()
 
 def draw_title(screen, width, text):
     """Draws a centered black title at the top."""
-    title_font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 40)
+    title_font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 40)
     title_surface = title_font.render(text, True, (0, 0, 0))
     screen.blit(title_surface, (width//2 - title_surface.get_width()//2, 0))
 
@@ -23,7 +24,7 @@ def draw_back_button(screen, button_font):
 
 def draw_scores(screen, scores):
     """Draws the list of scores (simple version, modifiable later)."""
-    font = pygame.font.Font('assets/fonts/FrederickatheGreat-Regular.ttf', 33)
+    font = pygame.font.Font(resource_path('assets/fonts/FrederickatheGreat-Regular.ttf'), 33)
 
     start_y = 95
     spacing = 37
