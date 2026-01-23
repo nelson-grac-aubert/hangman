@@ -51,7 +51,7 @@ def save_score(player_name, word, lives_left, filename="scores.txt"):
     
     score = calculate_score(word, lives_left)
 
-    line = f"{player_name} : {score}"
+    line = f"{player_name} : {score}\n"
     with open(resource_path(filename), "a", encoding="utf-8") as f:
         f.write(line)
 

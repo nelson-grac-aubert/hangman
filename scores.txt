@@ -1,8 +1,3 @@
-Nelson : 580
-Yannis : 400
-Angelina : 200
-Yannis : 900
-Nelson : 600
-Angelina : 100
-Yannis : 20
-Coucou! : 510
+Julie : 410
+Angelina : 540
+Yannis : 340
